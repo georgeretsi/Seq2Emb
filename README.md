@@ -5,10 +5,14 @@ This repository contains the code for generating word embeddings and reproducing
 We provide PyTorch implementations of all the main components of the proposed DNN system that can generate discriminative word embeddings, ideal for Keyword Spotting. The core idea is to make use of the encoding output of a Sequence-to-Sequence architecture, trained for performing word recognition. 
 
 Overview of overall system (two recognition branches: CTC & Seq2Seq):
-![System Overview](paper_figs/htr_overview.png?raw=true "System Overview")
+<p align="center">
+    <img src="paper_figs/htr_overview.png" width="90%">
+</p>
 
-Architectural Details:
-![Architecture](paper_figs/detailed_arch.png?raw=true "Architecture")
+Architectural Details of the different components:
+<p align="center">
+    <img src="paper_figs/detailed_arch.png" width="75%">
+</p>
 
 Overview of the different setups of the proposed system. Evaluation can be categorized to recognition and three spotting cases: Query-by-Example (QbE), Query-by-String (QbS) and QbS by force-alignment (FA).
 ![Functionality](paper_figs/bmvc-functionality.png?raw=true "Functionality")
