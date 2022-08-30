@@ -226,14 +226,14 @@ def train(epoch, train_loader, models, optimizers, setting_dict, gpu_id, logger,
 
             cnn.train()
 
-            print('orig:: ' + tst_transcr)
+            print('transcr:: ' + tst_transcr)
 
             if path_ctc:
                 ctc_top.eval()
                 tst_o = ctc_top(tst_feat)[0]
                 tdec = tst_o.argmax(2).permute(1, 0).cpu().numpy().squeeze()
                 tt = [v for j, v in enumerate(tdec) if j == 0 or v != tdec[j - 1]]
-                print('gdec:: ' + ''.join([config.icdict[t] for t in tt]).replace('_', ''))
+                print('ctc-dec:: ' + ''.join([config.icdict[t] for t in tt]).replace('_', ''))
                 ctc_top.train()
 
             if path_s2s:
@@ -252,7 +252,7 @@ def train(epoch, train_loader, models, optimizers, setting_dict, gpu_id, logger,
                     oo += [config.icdict[decoder_output.argmax().item()]]
                     topv, topi = decoder_output.topk(1)
                     decoder_input = topi.squeeze().detach()
-                print('adec:: ' + ''.join(oo))
+                print('s2s-dec:: ' + ''.join(oo))
                 cdec.train()
 
                 if path_autoencoder:
@@ -268,7 +268,7 @@ def train(epoch, train_loader, models, optimizers, setting_dict, gpu_id, logger,
                         oo += [config.icdict[decoder_output.argmax().item()]]
                         topv, topi = decoder_output.topk(1)
                         decoder_input = topi.squeeze().detach()
-                    print('odec:: ' + ''.join(oo))
+                    print('autoenc:: ' + ''.join(oo))
                     cenc.train()
                     cdec.train()
     return loss_report
