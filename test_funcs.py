@@ -35,7 +35,7 @@ def test(epoch, test_loader, models, setting_dict, gpu_id, logger):
         img = Variable(img.cuda(gpu_id))
         with torch.no_grad():
             o = ctc_top(cnn(img))[0]
-        tdec = o.argmax(2).permute(1, 0).cpu().numpy().squeeze()
+        tdec = o.argmax(2).permute(1, 0).cpu().numpy().reshape(img.size(0), -1)
         tdecs += [tdec]
         transcrs += list(transcr)
     tdecs = np.concatenate(tdecs)
@@ -161,7 +161,7 @@ def test_kws(epoch, test_loader, models, setting_dict, gpu_id, logger, distance=
             if distance == 'euclidean':
                 tdec = enc_feat.cpu().numpy().squeeze()
             elif distance == 'cosine':
-                tdec = F.normalize(enc_feat, dim=1).cpu().numpy().squeeze()
+                tdec = F.normalize(enc_feat, dim=1).cpu().numpy().reshape(img.size(0), -1)
 
             #tdec = enc(feat).cpu().numpy().squeeze()
             #tdec = F.normalize(enc(feat).sign(), dim=1).cpu().numpy().squeeze()
