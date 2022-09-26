@@ -159,12 +159,12 @@ def test_kws(epoch, test_loader, models, setting_dict, gpu_id, logger, distance=
             if binarize:
                 enc_feat = enc_feat.sign()
             if distance == 'euclidean':
-                tdec = enc_feat.cpu().numpy().squeeze()
+                tdec = enc_feat.cpu().numpy().reshape(img.size(0), -1)
             elif distance == 'cosine':
                 tdec = F.normalize(enc_feat, dim=1).cpu().numpy().reshape(img.size(0), -1)
 
-            #tdec = enc(feat).cpu().numpy().squeeze()
-            #tdec = F.normalize(enc(feat).sign(), dim=1).cpu().numpy().squeeze()
+            #tdec = enc(feat).cpu().numpy().reshape(img.size(0), -1)
+            #tdec = F.normalize(enc(feat).sign(), dim=1).cpu().numpy().reshape(img.size(0), -1)
         tdecs += [tdec]
         transcrs += [config.reduced(t.strip()) for t in list(transcr)]
     tdecs = np.concatenate(tdecs)
@@ -264,8 +264,8 @@ def test_qbs_kws_fa(epoch, test_loader, models, setting_dict, gpu_id, logger):
             feat = cnn(img)
             tdec = enc(feat).detach()
 
-            #tdec = enc(feat).cpu().numpy().squeeze()
-            #tdec = F.normalize(enc(feat).sign(), dim=1).cpu().numpy().squeeze()
+            #tdec = enc(feat).cpu().numpy().reshape(img.size(0), -1)
+            #tdec = F.normalize(enc(feat).sign(), dim=1).cpu().numpy().reshape(img.size(0), -1)
         tdecs += [tdec]
         transcrs += [config.reduced(t.strip()) for t in list(transcr)]
     tdecs = torch.cat(tdecs)
