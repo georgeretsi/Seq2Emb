@@ -6,7 +6,7 @@ matplotlib==3.4.3
 networkx==2.6.3
 numpy==1.22.0
 opencv-python==4.5.4.58
-Pillow==9.2.0
+Pillow==9.3.0
 pyparsing==3.0.5
 python-dateutil==2.8.2
 PyWavelets==1.2.0
